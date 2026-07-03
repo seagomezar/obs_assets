@@ -26,7 +26,8 @@ class DashboardController {
 
   connectWS() {
     const wsUrl = `ws://${window.location.hostname || 'localhost'}:3000`;
-    this.socket = new WebSocket(wsUrl);
+    // Real WebSocket locally, serverless shim on GitHub Pages (same surface).
+    this.socket = new OverlayConnection(wsUrl);
 
     this.socket.onopen = () => {
       this.updateConnectionStatus(true);
@@ -557,6 +558,12 @@ class DashboardController {
     // Reset button
     document.getElementById('reset-state-btn').addEventListener('click', () => {
       if (confirm('Are you sure you want to reset all overlays and speaker profiles to defaults?')) {
+        // In serverless demo mode there is no /api/reset endpoint; the shim
+        // handles a RESET_STATE action and broadcasts a fresh snapshot instead.
+        if (this.socket && this.socket.mode === 'shim') {
+          this.socket.send(JSON.stringify({ type: 'RESET_STATE' }));
+          return;
+        }
         fetch('/api/reset', { method: 'POST' })
           .then(res => res.json())
           .then(data => {

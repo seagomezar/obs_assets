@@ -1,0 +1,62 @@
+name: Deploy demo to GitHub Pages
+
+# Publishes the static public/ directory as the GitHub Pages site.
+# The Node server (server.js) is only for local OBS use and is not deployed.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least-privilege token: only what Pages deployment needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  smoke-test:
+    name: Smoke test static site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Entry point exists
+        run: test -f public/index.html
+
+      - name: No root-absolute local asset paths
+        # Under a project Pages site the base path is /obs_assets/, so any
+        # src="/..." or href="/..." pointing at a local asset would 404.
+        # External URLs (https://, //cdn...) and anchors (#) are fine.
+        run: |
+          if grep -REn '(src|href)="/[^/]' public/ ; then
+            echo "::error::Found root-absolute local asset path(s). Use relative paths so the site works under /obs_assets/."
+            exit 1
+          fi
+          echo "No root-absolute local asset paths found."
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: smoke-test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload public/ artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

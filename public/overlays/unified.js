@@ -35,8 +35,11 @@ class StreamOverlayController {
   connectWS() {
     const wsUrl = `ws://${window.location.hostname || 'localhost'}:3000`;
     console.log(`Connecting to WebSocket hub at: ${wsUrl}`);
-    
-    this.socket = new WebSocket(wsUrl);
+
+    // OverlayConnection uses a real WebSocket locally and a serverless shim on
+    // GitHub Pages. It exposes the same surface as WebSocket, so the rest of
+    // this controller is unchanged.
+    this.socket = new OverlayConnection(wsUrl);
 
     this.socket.onopen = () => {
       console.log('Successfully connected to WebSocket hub.');
