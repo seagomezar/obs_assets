@@ -37,6 +37,18 @@ class OverlayConnection {
       clearTimeout(this._probeTimer);
       try { if (this._ws) this._ws.close(); } catch (_) { /* ignore */ }
       this._ws = null;
+
+      // When running against the real local server (port 3000), a failure means
+      // the server is down or restarting - not that we're on static hosting.
+      // Propagate close/error so the controller's own reconnect logic retries,
+      // instead of permanently dropping into the demo shim.
+      if (typeof location !== 'undefined' && location.port === '3000') {
+        this.readyState = 3; // WebSocket.CLOSED
+        if (this.onerror) this.onerror(new Error(`WebSocket failed on port 3000: ${reason}`));
+        if (this.onclose) this.onclose();
+        return;
+      }
+
       console.info(`[OverlayConnection] No live server (${reason}). Using serverless demo shim.`);
       this._startShim();
     };
@@ -87,12 +99,32 @@ class OverlayConnection {
     if ('BroadcastChannel' in self) {
       this._channel = new BroadcastChannel('obs-assets-demo');
       this._channel.onmessage = (event) => {
-        // Another tab produced a broadcast; adopt any state and deliver it,
-        // but never re-broadcast (that would loop).
         const msg = event.data;
-        if (msg && msg.state) this._state = msg.state;
+        if (!msg) return;
+
+        // A tab that just started is asking for the current state; answer so it
+        // doesn't sit on stale defaults until the next action.
+        if (msg.type === 'REQUEST_STATE') {
+          this._channel.postMessage({ type: 'STATE_UPDATE', state: this._clone(this._state) });
+          return;
+        }
+
+        // Adopt any state a peer broadcast, and persist it to THIS tab's
+        // sessionStorage so a reload here doesn't revert to defaults.
+        if (msg.state) {
+          this._state = msg.state;
+          this._saveState();
+        } else if (msg.type === 'ALERT_TRIGGERED' && msg.alert) {
+          this._state.currentAlert = msg.alert;
+          this._saveState();
+        }
+
+        // Deliver but never re-broadcast (that would loop).
         this._deliver(msg);
       };
+
+      // Ask any already-open tab for the live snapshot.
+      this._channel.postMessage({ type: 'REQUEST_STATE' });
     }
 
     // Announce "connected" and push the initial snapshot, matching the
@@ -137,6 +169,7 @@ class OverlayConnection {
   // messages the server would have emitted for this action.
   _reduce(action) {
     const s = this._state;
+    if (!s) return [];
     switch (action.type) {
       case 'UPDATE_STATE': {
         this._state = { ...s, ...action.state };
@@ -166,20 +199,22 @@ class OverlayConnection {
           message: action.message,
           badge: action.badge || 'javascript'
         };
-        s.widgets.chat.messages.push(chatMsg);
-        if (s.widgets.chat.messages.length > 20) s.widgets.chat.messages.shift();
+        if (s.widgets && s.widgets.chat && Array.isArray(s.widgets.chat.messages)) {
+          s.widgets.chat.messages.push(chatMsg);
+          if (s.widgets.chat.messages.length > 20) s.widgets.chat.messages.shift();
+        }
         return [{ type: 'CHAT_MESSAGE_ADDED', message: chatMsg, state: this._clone(this._state) }];
       }
       case 'VOTE_POLL': {
         const i = action.optionIndex;
-        if (s.widgets.poll.votes[i] !== undefined) {
+        if (s.widgets && s.widgets.poll && Array.isArray(s.widgets.poll.votes) && s.widgets.poll.votes[i] !== undefined) {
           s.widgets.poll.votes[i]++;
           return [{ type: 'STATE_UPDATE', state: this._clone(this._state) }];
         }
         return [];
       }
       case 'RESET_STATE': {
-        this._state = this._clone(window.DEMO_STATE);
+        this._state = this._clone(window.DEMO_STATE || {});
         return [{ type: 'STATE_UPDATE', state: this._clone(this._state) }];
       }
       default:
@@ -198,9 +233,14 @@ class OverlayConnection {
   _loadState() {
     try {
       const saved = sessionStorage.getItem('obs-assets-demo-state');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        // Guard against a literal 'null' (JSON.parse('null') === null), which
+        // would make this._state null and crash the reducer downstream.
+        const parsed = JSON.parse(saved);
+        if (parsed) return parsed;
+      }
     } catch (_) { /* ignore */ }
-    return this._clone(window.DEMO_STATE);
+    return this._clone(window.DEMO_STATE || {});
   }
 
   _saveState() {
