@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OBS Vertical Overlay Layer (Reels / TikTok / Shorts)</title>
+  <link rel="stylesheet" href="vertical.css">
+  <!-- Load Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="theme-gemini">
+  <!-- Canvas layer for vertical background animations -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Overlay Containers -->
+  <div id="overlay-root">
+    
+    <!-- Top Alert Layer -->
+    <div id="alert-container" class="alert-hidden">
+      <div class="alert-box">
+        <div class="alert-icon-wrapper" id="alert-svg-icon"></div>
+        <div class="alert-text-wrapper">
+          <div class="alert-title" id="alert-title-text">NEW FOLLOWER!</div>
+          <div class="alert-message" id="alert-msg-text">TechExplorer joined the GDE hub!</div>
+        </div>
+        <div class="alert-accent-line"></div>
+      </div>
+    </div>
+
+    <!-- Active Portrait Layout Grid -->
+    <div id="layout-grid" class="layout-solo">
+      <!-- Camera Slot 1 (Speaker 0) -->
+      <div class="camera-slot" id="slot-0">
+        <video class="slot-webcam" id="webcam-video-0" autoplay playsinline muted></video>
+        <div class="slot-border top-left"></div>
+        <div class="slot-border top-right"></div>
+        <div class="slot-border bottom-left"></div>
+        <div class="slot-border bottom-right"></div>
+        
+        <div class="slot-badge" id="slot-badge-0">
+          <span class="badge-icon" id="slot-icon-0"></span>
+          <span class="badge-label">SPEAKER</span>
+        </div>
+        
+        <div class="slot-corner-specs">
+          <span class="spec-text">PORTRAIT // 9:16</span>
+        </div>
+
+        <!-- Speaker 1 Lower Third Inside Slot -->
+        <div class="lower-third-wrapper" id="lt-wrapper-0">
+          <div class="lower-third-card" id="lt-card-0">
+            <div class="lt-stripe"></div>
+            <div class="lt-content">
+              <h2 class="lt-name" id="lt-name-0">Dr. Evelyn Carter</h2>
+              <p class="lt-role" id="lt-role-0">Web GDE & AI Architect</p>
+              <div class="lt-meta">
+                <span class="lt-social" id="lt-social-0">@evelyn_dev</span>
+                <span class="lt-badges-list" id="lt-badges-0"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Camera Slot 2 (Speaker 1) -->
+      <div class="camera-slot" id="slot-1">
+        <video class="slot-webcam" id="webcam-video-1" autoplay playsinline muted></video>
+        <div class="slot-border top-left"></div>
+        <div class="slot-border top-right"></div>
+        <div class="slot-border bottom-left"></div>
+        <div class="slot-border bottom-right"></div>
+        
+        <div class="slot-badge" id="slot-badge-1">
+          <span class="badge-icon" id="slot-icon-1"></span>
+          <span class="badge-label">GUEST</span>
+        </div>
+        
+        <div class="slot-corner-specs">
+          <span class="spec-text">STACK // SYNC</span>
+        </div>
+
+        <!-- Speaker 2 Lower Third Inside Slot -->
+        <div class="lower-third-wrapper" id="lt-wrapper-1">
+          <div class="lower-third-card" id="lt-card-1">
+            <div class="lt-stripe"></div>
+            <div class="lt-content">
+              <h2 class="lt-name" id="lt-name-1">Alex Rivera</h2>
+              <p class="lt-role" id="lt-role-1">Full Stack Tech Lead</p>
+              <div class="lt-meta">
+                <span class="lt-social" id="lt-social-1">@alex_codes</span>
+                <span class="lt-badges-list" id="lt-badges-1"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Presentation Slot (For screen share/slides) -->
+      <div class="presentation-slot" id="slot-presentation">
+        <div class="slot-border top-left"></div>
+        <div class="slot-border top-right"></div>
+        <div class="slot-border bottom-left"></div>
+        <div class="slot-border bottom-right"></div>
+        <div class="slot-badge">
+          <span class="badge-label">SLIDES // CODE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Widgets Containers (Configured for 9:16 layout) -->
+    
+    <!-- Countdown Timer -->
+    <div id="countdown-widget" class="widget widget-hidden">
+      <div class="widget-header">
+        <span class="widget-icon" id="icon-timer"></span>
+        <span class="widget-title">STARTING SOON</span>
+      </div>
+      <div class="countdown-body">
+        <div class="countdown-time" id="countdown-text">05:00</div>
+        <div class="countdown-progress-bar">
+          <div class="countdown-progress-fill" id="countdown-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Stream Chat Widget -->
+    <div id="chat-widget" class="widget widget-chat-container">
+      <div class="widget-header">
+        <span class="widget-icon" id="icon-chat"></span>
+        <span class="widget-title">LIVE CHAT FEED</span>
+      </div>
+      <div class="chat-feed" id="chat-feed-box">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Active Topic Card -->
+    <div id="topic-widget" class="widget widget-topic-container">
+      <div class="topic-label">GDE LIVE TOPIC</div>
+      <div class="topic-text" id="topic-text-content">WebGL & Gemini integration</div>
+    </div>
+
+    <!-- Subscriber Goal bar -->
+    <div id="goal-widget" class="widget widget-goal-container">
+      <div class="goal-header">
+        <span class="goal-title" id="goal-title-text">Goal</span>
+        <span class="goal-numbers" id="goal-numbers-text">85 / 100</span>
+      </div>
+      <div class="goal-bar">
+        <div class="goal-fill" id="goal-fill-bar" style="width: 85%;"></div>
+      </div>
+    </div>
+
+    <!-- Q&A Overlay Question Card -->
+    <div id="qa-widget" class="widget widget-hidden widget-qa-container">
+      <div class="qa-badge">QUESTION</div>
+      <div class="qa-body">
+        <p class="qa-text" id="qa-text-content">"What are the best GDE patterns for modern Web development?"</p>
+        <span class="qa-author" id="qa-author-text">- asked by userDev</span>
+      </div>
+    </div>
+
+    <!-- Live Poll Widget -->
+    <div id="poll-widget" class="widget widget-hidden widget-poll-container">
+      <div class="widget-header">
+        <span class="widget-icon" id="icon-poll"></span>
+        <span class="widget-title" id="poll-question-text">Interactive Live Poll</span>
+      </div>
+      <div class="poll-options-list" id="poll-options-box">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Code Snippet Display Widget -->
+    <div id="code-widget" class="widget widget-hidden widget-code-container">
+      <div class="code-header">
+        <span class="code-lang" id="code-lang-text">JAVASCRIPT</span>
+        <span class="code-action">Code Share</span>
+      </div>
+      <pre class="code-pre"><code id="code-box">// Code snippet will render here</code></pre>
+    </div>
+
+    <!-- Social Handle Rotator -->
+    <div id="socials-widget" class="widget widget-socials-container">
+      <div class="socials-icon" id="socials-rotating-icon"></div>
+      <div class="socials-text" id="socials-rotating-text">github.com/webgde</div>
+    </div>
+
+    <!-- Bottom News Ticker -->
+    <div id="ticker-widget" class="widget-ticker-container">
+      <div class="ticker-prefix">FLASH</div>
+      <div class="ticker-track">
+        <div class="ticker-content" id="ticker-scroll-content">
+          Loading GDE news...
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="audio-activator" style="position: absolute; top:0; left:0; width:100%; height:100%; cursor: pointer; z-index: 99999; display: none;"></div>
+
+  <!-- Include Scripts -->
+  <script src="../assets/icons.js"></script>
+  <script src="../assets/synth.js"></script>
+  <script src="vertical.js"></script>
+</body>
+</html>

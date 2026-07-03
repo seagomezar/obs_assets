@@ -1,0 +1,16 @@
+{
+  "name": "obs-tech-assets-server",
+  "version": "1.0.0",
+  "description": "OBS Stream Assets Server for Technology, Web, GDE and AI Content",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "reset": "node server.js --reset"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.18.0"
+  },
+  "author": "Antigravity",
+  "license": "MIT"
+}

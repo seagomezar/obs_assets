@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OBS Stream Asset Controller</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <!-- Load Outfit font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="dashboard-root">
+    
+    <!-- Top Header -->
+    <header class="dashboard-header glass-panel">
+      <div class="header-branding">
+        <h1 class="glow-text">OBS TECH STREAM MANAGER</h1>
+        <p class="subtitle">Google Web GDE & AI Developer Overlay Engine</p>
+      </div>
+      <div class="status-panel">
+        <span class="status-indicator disconnected" id="conn-indicator"></span>
+        <span class="status-label" id="conn-label">OFFLINE</span>
+        <div style="display: flex; align-items: center; gap: 8px; margin-left: 20px; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; margin-right: 10px;">
+          <label class="switch" style="margin-bottom: 0;">
+            <input type="checkbox" id="webcam-tryout-toggle">
+            <span class="slider"></span>
+          </label>
+          <span class="status-label" style="font-size: 0.8rem; letter-spacing: 1px; color: var(--accent);">WEBCAM TRYOUT</span>
+        </div>
+        <a href="../overlays/vertical.html" target="_blank" class="btn btn-reset" style="border-color: var(--accent); color: var(--accent); background: rgba(44, 214, 173, 0.05); margin-right: 5px; text-decoration: none; display: inline-block; vertical-align: middle; line-height: 1.4;" title="Open vertical overlay in a new tab (TikTok/Reels/Shorts format)">VERTICAL VIEW</a>
+        <button class="btn btn-reset" id="reset-state-btn" title="Reset overlays state to default template">RESET ALL</button>
+      </div>
+    </header>
+
+    <!-- Main Grid Content -->
+    <main class="dashboard-grid">
+      
+      <!-- COLUMN 1: Scene Layouts & Visual Styling -->
+      <section class="control-card glass-panel flex-col">
+        <h2 class="card-title">Scene Setup & Styles</h2>
+        
+        <!-- Layout Selection Grid -->
+        <div class="control-group">
+          <label>Active Layout Template (10 Options)</label>
+          <div class="layouts-selector-grid">
+            <button class="layout-btn active" data-layout="solo">
+              <span class="btn-sub">Solo Speaker</span>
+            </button>
+            <button class="layout-btn" data-layout="solo-chat">
+              <span class="btn-sub">Solo + Chat</span>
+            </button>
+            <button class="layout-btn" data-layout="split">
+              <span class="btn-sub">Guest Split</span>
+            </button>
+            <button class="layout-btn" data-layout="podcast">
+              <span class="btn-sub">Podcast Grid</span>
+            </button>
+            <button class="layout-btn" data-layout="presentation">
+              <span class="btn-sub">Speaker + Slides</span>
+            </button>
+            <button class="layout-btn" data-layout="pair-programming">
+              <span class="btn-sub">Pair Programming</span>
+            </button>
+            <button class="layout-btn" data-layout="fireside">
+              <span class="btn-sub">Fireside Bubbles</span>
+            </button>
+            <button class="layout-btn" data-layout="vs-debate">
+              <span class="btn-sub">VS / Debate</span>
+            </button>
+            <button class="layout-btn" data-layout="qa">
+              <span class="btn-sub">Q&A Focus</span>
+            </button>
+            <button class="layout-btn" data-layout="lobby">
+              <span class="btn-sub">BRB Lobby</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Styling Themes -->
+        <div class="control-group">
+          <label>Overlay Color Theme (8 Options)</label>
+          <div class="select-grid">
+            <button class="theme-select-btn active theme-gemini" data-theme="gemini">Gemini Glow</button>
+            <button class="theme-select-btn theme-gde" data-theme="gde">GDE Neon</button>
+            <button class="theme-select-btn theme-matrix" data-theme="matrix">Matrix Terminal</button>
+            <button class="theme-select-btn theme-synthwave" data-theme="synthwave">Synth Cyber</button>
+            <button class="theme-select-btn theme-frost" data-theme="frost">Frost Glass</button>
+            <button class="theme-select-btn theme-dracula" data-theme="dracula">Dracula Dev</button>
+            <button class="theme-select-btn theme-pixel" data-theme="pixel">Pixel Hacker</button>
+            <button class="theme-select-btn theme-gold" data-theme="gold">Gold Premium</button>
+          </div>
+        </div>
+
+        <!-- Canvas Animated Backgrounds -->
+        <div class="control-group">
+          <label>Dynamic Background (6 Options)</label>
+          <div class="select-grid col-3">
+            <button class="bg-select-btn active" data-bg="particles">Particles Web</button>
+            <button class="bg-select-btn" data-bg="binary">Binary Rain</button>
+            <button class="bg-select-btn" data-bg="grid">3D Grid Perspective</button>
+            <button class="bg-select-btn" data-bg="neural">Neural Network</button>
+            <button class="bg-select-btn" data-bg="wave">Flowing Bezier</button>
+            <button class="bg-select-btn" data-bg="bubbles">Translucent Orb</button>
+          </div>
+        </div>
+
+        <!-- Lower Third Presentation Style -->
+        <div class="control-group">
+          <label>Lower Third Design (8 Options)</label>
+          <div class="select-grid col-4">
+            <button class="lt-select-btn active" data-lt="slide">Slide Card</button>
+            <button class="lt-select-btn" data-lt="glass">Glass Capsule</button>
+            <button class="lt-select-btn" data-lt="gde">GDE Stripe</button>
+            <button class="lt-select-btn" data-lt="ai">AI Pulse</button>
+            <button class="lt-select-btn" data-lt="cli">CLI Prompt</button>
+            <button class="lt-select-btn" data-lt="split">Split Blade</button>
+            <button class="lt-select-btn" data-lt="brutalist">Brutalist Shadow</button>
+            <button class="lt-select-btn" data-lt="bubble">Bubble Float</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- COLUMN 2: Speaker Slots & Tech Badges Manager -->
+      <section class="control-card glass-panel flex-col">
+        <h2 class="card-title">Speakers & Technologies Manager</h2>
+        
+        <!-- Speaker Tabs -->
+        <div class="speaker-tabs-header">
+          <button class="tab-btn active" id="sp-tab-btn-0">Speaker 1 (Host)</button>
+          <button class="tab-btn" id="sp-tab-btn-1">Speaker 2 (Guest)</button>
+        </div>
+
+        <!-- Speaker Tab Contents -->
+        <div class="speaker-form-container">
+          <form id="speaker-editor-form">
+            <input type="hidden" id="editor-speaker-id" value="0">
+            
+            <div class="form-row">
+              <div class="input-group">
+                <label for="speaker-name">Display Name</label>
+                <input type="text" id="speaker-name" required placeholder="Dr. Jane Doe">
+              </div>
+              <div class="input-group">
+                <label for="speaker-social">Social Media Handle</label>
+                <input type="text" id="speaker-social" placeholder="@handle">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="speaker-role">Professional Role / Title</label>
+              <input type="text" id="speaker-role" required placeholder="Web Developer Expert">
+            </div>
+
+            <!-- SVG Badges library (50 categories) -->
+            <div class="input-group">
+              <label>Technology Badges (Choose up to 5)</label>
+              <div class="badges-chips-library" id="badges-container">
+                <!-- Group 1: Web Core -->
+                <div class="badge-library-group">
+                  <span class="group-label">Web Core</span>
+                  <div class="chips-flex" id="group-web"></div>
+                </div>
+                <!-- Group 2: Google & Frameworks -->
+                <div class="badge-library-group">
+                  <span class="group-label">Google / GDE</span>
+                  <div class="chips-flex" id="group-google"></div>
+                </div>
+                <!-- Group 3: AI / ML -->
+                <div class="badge-library-group">
+                  <span class="group-label">AI & Analytics</span>
+                  <div class="chips-flex" id="group-ai"></div>
+                </div>
+                <!-- Group 4: Socials -->
+                <div class="badge-library-group">
+                  <span class="group-label">Socials</span>
+                  <div class="chips-flex" id="group-socials"></div>
+                </div>
+                <!-- Group 5: General -->
+                <div class="badge-library-group">
+                  <span class="group-label">General Icons</span>
+                  <div class="chips-flex" id="group-general"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="speaker-actions-row">
+              <button type="submit" class="btn btn-save">Save Speaker Profile</button>
+              <button type="button" class="btn btn-toggle-lt deactivated" id="toggle-lt-btn">
+                LOWER THIRD: OFF
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- COLUMN 3: Live Preview, Widgets Control & Alert Board -->
+      <section class="control-card glass-panel flex-col preview-alert-column">
+        
+        <!-- Live Scaled Overlay Preview -->
+        <h2 class="card-title">Live Canvas Preview</h2>
+        <div class="preview-viewport-wrapper">
+          <div class="preview-iframe-container">
+            <!-- Iframe renders overlays/unified.html scaled down to fit box -->
+            <iframe src="../overlays/unified.html" id="preview-iframe" scrolling="no" allow="camera; microphone"></iframe>
+          </div>
+          <span class="preview-tag">LIVE SYNCHRONIZED PREVIEW</span>
+        </div>
+
+        <!-- Alert Board console -->
+        <div class="widget-section-divider">Stream Alert Trigger</div>
+        <div class="alerts-console-box">
+          <div class="input-group row-inline">
+            <input type="text" id="alert-username-input" placeholder="User Name" value="DeveloperHub">
+            <input type="text" id="alert-value-input" placeholder="Bits/Value (Optional)" style="width: 140px;">
+          </div>
+          <div class="alerts-buttons-row">
+            <button class="btn btn-alert follow" data-alert="follow">Follow Alert</button>
+            <button class="btn btn-alert subscriber" data-alert="subscriber">Subscribe Alert</button>
+            <button class="btn btn-alert cheer" data-alert="cheer">Cheer Bits</button>
+            <button class="btn btn-alert sponsor" data-alert="sponsor">Sponsor Alert</button>
+          </div>
+        </div>
+
+        <!-- Synthesized sound effects board -->
+        <div class="widget-section-divider">Synthesizer Sound FX Board</div>
+        <div class="soundboard-console-box">
+          <button class="btn btn-sound" data-sound="bloop">UI Bloop</button>
+          <button class="btn btn-sound" data-sound="swoosh">Swoosh Sweep</button>
+          <button class="btn btn-sound" data-sound="glitch">Glitch Crunch</button>
+          <button class="btn btn-sound" data-sound="subdrop">Sub Drop</button>
+          <button class="btn btn-sound" data-sound="chime">Chime Bell</button>
+          <button class="btn btn-sound" data-sound="fanfare">Fanfare Chord</button>
+        </div>
+      </section>
+      
+    </main>
+
+    <!-- Bottom Widgets Settings Drawer -->
+    <section class="widgets-settings-bar glass-panel">
+      <h2 class="card-title">Widgets & Interactive Overlays</h2>
+      <div class="widgets-control-grid">
+        
+        <!-- Topic Widget Panel -->
+        <div class="widget-config-card">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-topic-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">Topic Card</span>
+          </div>
+          <input type="text" id="widget-topic-text" placeholder="Active Stream Topic">
+        </div>
+
+        <!-- News Ticker Panel -->
+        <div class="widget-config-card">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-ticker-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">News Ticker strip</span>
+          </div>
+          <input type="text" id="widget-ticker-text" placeholder="Scrolling News Ticker headlines">
+        </div>
+
+        <!-- Chat Simulator Panel -->
+        <div class="widget-config-card">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-chat-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">Chat Feed Box</span>
+          </div>
+          <div class="chat-sim-row">
+            <input type="text" id="chat-sim-message" placeholder="Simulate chat message">
+            <select id="chat-sim-badge">
+              <option value="javascript">JS</option>
+              <option value="gemini">Gemini</option>
+              <option value="angular">Angular</option>
+              <option value="chrome">Chrome</option>
+              <option value="github">Github</option>
+              <option value="robot">AI Robot</option>
+            </select>
+            <button class="btn btn-chat-sim" id="chat-sim-send-btn">Send</button>
+          </div>
+        </div>
+
+        <!-- Countdown Timer Panel -->
+        <div class="widget-config-card">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-countdown-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">Countdown Clock</span>
+          </div>
+          <div class="countdown-sim-row">
+            <input type="number" id="widget-countdown-dur" value="300" style="width: 80px;" placeholder="Seconds">
+            <button class="btn" id="countdown-start-btn">Start</button>
+            <button class="btn btn-reset" id="countdown-stop-btn">Stop</button>
+          </div>
+        </div>
+
+        <!-- Q&A Queue Panel -->
+        <div class="widget-config-card">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-qa-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">Q&A Question card</span>
+          </div>
+          <input type="text" id="widget-qa-question" placeholder="Question Text" style="margin-bottom: 5px;">
+          <input type="text" id="widget-qa-author" placeholder="Asked by (Username)">
+        </div>
+
+        <!-- Stream Goal Panel -->
+        <div class="widget-config-card">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-goal-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">Goal Indicator</span>
+          </div>
+          <div class="goal-sim-row">
+            <input type="text" id="widget-goal-title" placeholder="Sub Goal" value="Subscriber Goal">
+            <input type="number" id="widget-goal-current" value="85" style="width: 65px;" placeholder="Current">
+            <input type="number" id="widget-goal-target" value="100" style="width: 65px;" placeholder="Target">
+          </div>
+        </div>
+
+        <!-- Interactive Live Poll -->
+        <div class="widget-config-card span-2">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-poll-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">Interactive Live Poll Panel</span>
+          </div>
+          <div class="poll-config-flex">
+            <input type="text" id="widget-poll-q" placeholder="Poll Question" class="poll-input-full">
+            <div class="poll-opts-fields">
+              <input type="text" id="widget-poll-opt-0" placeholder="Option A">
+              <input type="text" id="widget-poll-opt-1" placeholder="Option B">
+              <input type="text" id="widget-poll-opt-2" placeholder="Option C">
+              <input type="text" id="widget-poll-opt-3" placeholder="Option D">
+            </div>
+            <div class="poll-actions-flex">
+              <button class="btn btn-save" id="widget-poll-update-btn">Set Poll</button>
+              <div class="poll-vote-sims" id="poll-vote-sims-box">
+                <!-- Vote simulation buttons appear here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Snippet Display -->
+        <div class="widget-config-card span-2">
+          <div class="config-header">
+            <label class="switch">
+              <input type="checkbox" id="widget-code-active">
+              <span class="slider"></span>
+            </label>
+            <span class="widget-name">Code Share Snippet</span>
+          </div>
+          <div class="code-config-flex">
+            <select id="widget-code-lang" style="margin-bottom: 5px;">
+              <option value="javascript">JavaScript</option>
+              <option value="html">HTML5</option>
+              <option value="css">CSS3</option>
+              <option value="rust">Rust</option>
+              <option value="python">Python</option>
+            </select>
+            <textarea id="widget-code-content" rows="4" placeholder="// Paste code snippet here"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Load badges metadata and script -->
+  <script src="../assets/icons.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

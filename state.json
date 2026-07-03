@@ -1,0 +1,107 @@
+{
+  "layout": "solo",
+  "theme": "gde",
+  "background": "wave",
+  "lowerThirdStyle": "glass",
+  "speakers": [
+    {
+      "id": 0,
+      "name": "Dr. Evelyn Carter",
+      "role": "Web GDE & AI Architect",
+      "social": "@evelyn_dev",
+      "badges": [
+        "javascript",
+        "angular",
+        "gemini",
+        "firebase",
+        "chrome"
+      ],
+      "lowerThirdActive": false
+    },
+    {
+      "id": 1,
+      "name": "Alex Rivera",
+      "role": "Full Stack Tech Lead",
+      "social": "@alex_codes",
+      "badges": [
+        "typescript",
+        "nodejs",
+        "tensorflow",
+        "github"
+      ],
+      "lowerThirdActive": true
+    }
+  ],
+  "widgets": {
+    "ticker": {
+      "active": true,
+      "text": "🚀 WELCOME TO THE TECH & AI LIVE STREAM! • NEXT-GEN WEB TECHNOLOGIES • GOOGLE DEVELOPER EXPERTS HUB • DEEP DIVE INTO GEMINI MODEL INTEGRATION • ASK QUESTIONS IN CHAT!"
+    },
+    "topic": {
+      "active": true,
+      "text": "Building Real-Time OBS Overlays with WebSockets"
+    },
+    "chat": {
+      "active": true,
+      "messages": [
+        {
+          "id": 1,
+          "user": "dev_guru",
+          "message": "Hello stream! Excited for the Web GDE demo.",
+          "badge": "javascript"
+        },
+        {
+          "id": 2,
+          "user": "ai_explorer",
+          "message": "Is that Gemini code synthesized locally or calling the cloud API?",
+          "badge": "gemini"
+        },
+        {
+          "id": 3,
+          "user": "code_newbie",
+          "message": "Wow, the background animation looks so smooth! Is it canvas or CSS?",
+          "badge": "html5"
+        }
+      ]
+    },
+    "countdown": {
+      "active": false,
+      "duration": 300,
+      "endTime": null
+    },
+    "poll": {
+      "active": false,
+      "question": "Which framework do you use for AI integration?",
+      "options": [
+        "TensorFlow.js",
+        "Gemini Web SDK",
+        "Serverless APIs",
+        "Vanilla PyTorch"
+      ],
+      "votes": [
+        12,
+        28,
+        19,
+        5
+      ]
+    },
+    "codeSnippet": {
+      "active": false,
+      "code": "// Initialize Gemini Client\nconst ai = new GeminiClient({\n  apiKey: process.env.GEMINI_API_KEY,\n  model: \"gemini-1.5-flash\"\n});\n\nconst response = await ai.generateText({\n  prompt: \"Synthesize stream music\"\n});\nconsole.log(response.text);",
+      "language": "javascript"
+    },
+    "goal": {
+      "active": true,
+      "title": "Subscriber Goal",
+      "current": 84,
+      "target": 100
+    },
+    "qa": {
+      "active": false,
+      "question": "How do you handle audio synthesizers inside OBS Browser Sources?",
+      "author": "obs_coder"
+    }
+  },
+  "currentAlert": null,
+  "webcamActive": true
+}

@@ -1,0 +1,1309 @@
+/* ==========================================================================
+   OBS Unified Overlay Stylesheet
+   Supports: 8 Styling Themes, 10 Scene Layouts, 8 Lower Third Animations,
+   and 12 dynamic stream widgets.
+   ========================================================================== */
+
+/* Define Global Variables / Default (Gemini Theme) */
+:root {
+  --primary: #522cad;
+  --primary-rgb: 82, 44, 173;
+  --secondary: #a336de;
+  --accent: #2cd6ad;
+  --accent-rgb: 44, 214, 173;
+  --background: rgba(13, 8, 30, 0.85);
+  --border: rgba(163, 54, 222, 0.4);
+  --border-glow: 0 0 15px rgba(163, 54, 222, 0.5);
+  
+  --font-title: 'Outfit', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-retro: 'Press Start 2P', monospace;
+  --font-body: 'Outfit', sans-serif;
+  
+  --glass-bg: rgba(20, 15, 45, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-main: #ffffff;
+  --text-muted: #bdc5d8;
+  
+  --ticker-bg: rgba(8, 5, 20, 0.9);
+  --ticker-border: #a336de;
+  --ticker-color: #2cd6ad;
+}
+
+/* === THEME 1: GEMINI GLOW === */
+.theme-gemini {
+  /* Inherits defaults, but defined here explicitly */
+  --primary: #4f46e5;
+  --secondary: #d946ef;
+  --accent: #06b6d4;
+  --background: rgba(10, 5, 25, 0.7);
+  --border: rgba(217, 70, 239, 0.3);
+  --border-glow: 0 0 20px rgba(79, 70, 229, 0.6);
+  --glass-bg: rgba(15, 10, 35, 0.75);
+}
+
+/* === THEME 2: GDE NEON === */
+.theme-gde {
+  --primary: #4285F4; /* Google Blue */
+  --secondary: #EA4335; /* Google Red */
+  --accent: #34A853; /* Google Green */
+  --yellow: #FBBC05;
+  --background: rgba(15, 15, 15, 0.82);
+  --border: rgba(66, 133, 244, 0.4);
+  --border-glow: 0 0 15px rgba(234, 67, 53, 0.3), 0 0 15px rgba(66, 133, 244, 0.3);
+  --glass-bg: rgba(20, 20, 20, 0.85);
+  --glass-border: rgba(66, 133, 244, 0.15);
+}
+
+/* === THEME 3: MATRIX TERMINAL === */
+.theme-matrix {
+  --primary: #00ff00;
+  --secondary: #00aa00;
+  --accent: #33ff33;
+  --background: rgba(0, 0, 0, 0.95);
+  --border: #00ff00;
+  --border-glow: 0 0 10px rgba(0, 255, 0, 0.7);
+  --glass-bg: rgba(5, 15, 5, 0.9);
+  --glass-border: rgba(0, 255, 0, 0.3);
+  --text-main: #33ff33;
+  --text-muted: #00aa00;
+  --font-body: 'Share Tech Mono', monospace;
+  --font-title: 'Share Tech Mono', monospace;
+}
+
+/* === THEME 4: SYNTHWAVE CYBER === */
+.theme-synthwave {
+  --primary: #ff007f;
+  --secondary: #9b00e8;
+  --accent: #00f0ff;
+  --background: rgba(18, 5, 27, 0.75);
+  --border: rgba(0, 240, 255, 0.5);
+  --border-glow: 0 0 18px rgba(255, 0, 127, 0.6), 0 0 8px rgba(0, 240, 255, 0.4);
+  --glass-bg: rgba(25, 8, 42, 0.8);
+  --text-main: #ffffff;
+}
+
+/* === THEME 5: MINIMALIST FROST === */
+.theme-frost {
+  --primary: #3b82f6;
+  --secondary: #10b981;
+  --accent: #6366f1;
+  --background: rgba(240, 244, 250, 0.3);
+  --border: rgba(59, 130, 246, 0.3);
+  --border-glow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --text-main: #1f2937;
+  --text-muted: #4b5563;
+  --ticker-bg: rgba(255, 255, 255, 0.95);
+  --ticker-border: #3b82f6;
+  --ticker-color: #1f2937;
+}
+
+/* === THEME 6: DRACULA DARK === */
+.theme-dracula {
+  --primary: #bd93f9;
+  --secondary: #ff79c6;
+  --accent: #50fa7b;
+  --background: rgba(40, 42, 54, 0.88);
+  --border: rgba(189, 147, 249, 0.4);
+  --border-glow: 0 0 12px rgba(189, 147, 249, 0.5);
+  --glass-bg: rgba(30, 31, 41, 0.9);
+  --text-main: #f8f8f2;
+  --text-muted: #6272a4;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+/* === THEME 7: PIXEL HACKER === */
+.theme-pixel {
+  --primary: #ffffff;
+  --secondary: #ffffff;
+  --accent: #ffffff;
+  --background: #000000;
+  --border: #ffffff;
+  --border-glow: none;
+  --glass-bg: #000000;
+  --glass-border: 4px solid #ffffff;
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --font-body: 'Press Start 2P', monospace;
+  --font-title: 'Press Start 2P', monospace;
+  --font-mono: 'Press Start 2P', monospace;
+}
+
+/* === THEME 8: GOLD CORPORATE === */
+.theme-gold {
+  --primary: #d4af37; /* Gold */
+  --secondary: #aa7c11;
+  --accent: #f3e5ab;
+  --background: rgba(15, 17, 20, 0.9);
+  --border: rgba(212, 175, 55, 0.4);
+  --border-glow: 0 0 15px rgba(212, 175, 55, 0.3);
+  --glass-bg: rgba(25, 27, 30, 0.92);
+  --text-main: #f5f5f5;
+  --text-muted: #a6aab0;
+}
+
+/* ==========================================================================
+   Base Structure (Locked at 1920x1080 for OBS consistency)
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background-color: transparent;
+  color: var(--text-main);
+  font-family: var(--font-body);
+}
+
+#bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#overlay-root {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Glassmorphism Panel Helper */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--border-glow);
+  border-radius: 8px;
+}
+
+/* ==========================================================================
+   ALERTS SYSTEM (Fades and swooshes in from top center)
+   ========================================================================== */
+#alert-container {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 580px;
+  height: 100px;
+  z-index: 1000;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#alert-container.alert-hidden {
+  top: -140px;
+  opacity: 0;
+}
+
+.alert-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: var(--border-glow), 0 10px 30px rgba(0,0,0,0.5);
+  padding: 0 25px;
+  overflow: hidden;
+  position: relative;
+}
+
+.alert-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  fill: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  background: rgba(var(--accent-rgb), 0.1);
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  animation: pulse-glow 1.5s infinite alternate;
+}
+
+.alert-text-wrapper {
+  flex-grow: 1;
+}
+
+.alert-title {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+
+.alert-message {
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+.alert-accent-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+  animation: alert-slide-line 4s linear;
+}
+
+@keyframes alert-slide-line {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px rgba(var(--accent-rgb), 0.3); }
+  100% { box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.7); }
+}
+
+/* ==========================================================================
+   LAYOUT ENGINE (Absolute structures for OBS canvas coordinates)
+   ========================================================================== */
+
+/* Common Speaker Slot Decoration */
+.camera-slot {
+  position: absolute;
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: rgba(0, 0, 0, 0.2); /* visual aid */
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+}
+
+.slot-border {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-color: var(--accent);
+  border-style: solid;
+  pointer-events: none;
+}
+.slot-border.top-left { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+.slot-border.top-right { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
+.slot-border.bottom-left { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; }
+.slot-border.bottom-right { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
+
+.slot-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--primary);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.slot-badge .badge-icon {
+  width: 12px;
+  height: 12px;
+  fill: #fff;
+  display: inline-block;
+}
+
+.slot-corner-specs {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* Presentation Frame */
+.presentation-slot {
+  position: absolute;
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px dashed rgba(var(--accent-rgb), 0.3);
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.85);
+  display: none; /* Only visible in presentation mode */
+}
+.presentation-slot .slot-badge {
+  background: var(--secondary);
+}
+
+/* --- LAYOUT 1: SOLO SPEAKER --- */
+.layout-solo #slot-0 {
+  width: 1280px;
+  height: 720px;
+  left: 320px;
+  top: 140px;
+  display: block;
+}
+.layout-solo #slot-1, 
+.layout-solo #slot-presentation {
+  display: none !important;
+}
+
+/* --- LAYOUT 2: SOLO SPEAKER + CHAT --- */
+.layout-solo-chat #slot-0 {
+  width: 1160px;
+  height: 652px;
+  left: 80px;
+  top: 170px;
+  display: block;
+}
+.layout-solo-chat #slot-1, 
+.layout-solo-chat #slot-presentation {
+  display: none !important;
+}
+/* Chat widget shifts dynamically to coordinates: width 520, height 652, left 1320, top 170 in this layout */
+
+/* --- LAYOUT 3: GUEST SPLIT SCREEN --- */
+.layout-split #slot-0 {
+  width: 860px;
+  height: 484px;
+  left: 70px;
+  top: 250px;
+  display: block;
+}
+.layout-split #slot-1 {
+  width: 860px;
+  height: 484px;
+  left: 990px;
+  top: 250px;
+  display: block;
+}
+.layout-split #slot-presentation {
+  display: none !important;
+}
+
+/* --- LAYOUT 4: PODCAST PANEL (Grid hosts) --- */
+.layout-podcast #slot-0 {
+  width: 720px;
+  height: 405px;
+  left: 180px;
+  top: 150px;
+  display: block;
+}
+.layout-podcast #slot-1 {
+  width: 720px;
+  height: 405px;
+  left: 1020px;
+  top: 150px;
+  display: block;
+}
+.layout-podcast #slot-presentation {
+  display: none !important;
+}
+/* In this panel view, the chat widget fits perfectly in the center bottom */
+
+/* --- LAYOUT 5: SPEAKER + PRESENTATION --- */
+.layout-presentation #slot-presentation {
+  display: block;
+  width: 1280px;
+  height: 720px;
+  left: 60px;
+  top: 140px;
+}
+.layout-presentation #slot-0 {
+  display: block;
+  width: 460px;
+  height: 258px;
+  left: 1400px;
+  top: 140px;
+}
+.layout-presentation #slot-1 {
+  display: none !important;
+}
+
+/* --- LAYOUT 6: PAIR PROGRAMMING / CODE REVIEW --- */
+.layout-pair-programming #slot-presentation {
+  display: block;
+  width: 1360px;
+  height: 765px;
+  left: 60px;
+  top: 120px;
+}
+.layout-pair-programming #slot-0 {
+  display: block;
+  width: 380px;
+  height: 214px;
+  left: 1480px;
+  top: 120px;
+}
+.layout-pair-programming #slot-1 {
+  display: block;
+  width: 380px;
+  height: 214px;
+  left: 1480px;
+  top: 360px;
+}
+
+/* --- LAYOUT 7: FIRESIDE CHAT (Bubble style) --- */
+.layout-fireside #slot-0 {
+  display: block;
+  width: 500px;
+  height: 500px;
+  left: 360px;
+  top: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 35px rgba(var(--accent-rgb), 0.4);
+}
+.layout-fireside #slot-1 {
+  display: block;
+  width: 500px;
+  height: 500px;
+  left: 1060px;
+  top: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 35px rgba(var(--accent-rgb), 0.4);
+}
+.layout-fireside #slot-presentation {
+  display: none !important;
+}
+/* Hide slot decorative corners/badges inside circular layout */
+.layout-fireside .slot-border,
+.layout-fireside .slot-corner-specs {
+  display: none !important;
+}
+.layout-fireside .slot-badge {
+  top: auto;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- LAYOUT 8: VS MODE / DEBATE --- */
+.layout-vs-debate #slot-0 {
+  display: block;
+  width: 820px;
+  height: 461px;
+  left: 80px;
+  top: 260px;
+  border-left: 5px solid #ff3b30;
+  box-shadow: inset 0 0 30px rgba(255, 59, 48, 0.2);
+}
+.layout-vs-debate #slot-1 {
+  display: block;
+  width: 820px;
+  height: 461px;
+  left: 1020px;
+  top: 260px;
+  border-right: 5px solid #007aff;
+  box-shadow: inset 0 0 30px rgba(0, 122, 255, 0.2);
+}
+.layout-vs-debate #slot-presentation {
+  display: none !important;
+}
+
+/* --- LAYOUT 9: Q&A INTERACTION --- */
+.layout-qa #slot-0 {
+  display: block;
+  width: 1000px;
+  height: 562px;
+  left: 80px;
+  top: 200px;
+}
+.layout-qa #slot-1,
+.layout-qa #slot-presentation {
+  display: none !important;
+}
+
+/* --- LAYOUT 10: STARTING / LOBBY (Countdown & News dominant) --- */
+.layout-lobby #slot-0,
+.layout-lobby #slot-1,
+.layout-lobby #slot-presentation {
+  display: none !important;
+}
+
+/* ==========================================================================
+   LOWER THIRDS ENGINE (8 Entrance Animations & Styles)
+   ========================================================================== */
+.lower-third-wrapper {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  width: calc(100% - 50px);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lower-third-wrapper.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lower-third-card {
+  width: 480px;
+  padding: 18px 22px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.lt-stripe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 6px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+}
+
+.lt-name {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 1.55rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  color: var(--text-main);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.lt-role {
+  font-size: 0.95rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.lt-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+}
+
+.lt-social {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.lt-badges-list {
+  display: flex;
+  gap: 6px;
+}
+
+.lt-badge-mini-svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--text-muted);
+  opacity: 0.85;
+  transition: all 0.3s;
+}
+.lt-badge-mini-svg:hover {
+  fill: var(--accent);
+  opacity: 1;
+}
+
+/* --- Lower Third Style 1: SLIDE SLATE (Default) --- */
+.lt-style-slide .lower-third-card {
+  border-radius: 0 10px 10px 0;
+}
+
+/* --- Lower Third Style 2: GLASS CAPSULE --- */
+.lt-style-glass .lower-third-card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+}
+.lt-style-glass .lt-stripe {
+  display: none;
+}
+
+/* --- Lower Third Style 3: GDE RIBBON --- */
+.lt-style-gde .lower-third-card {
+  border-radius: 4px;
+  border-left: 5px solid #4285F4;
+}
+.lt-style-gde .lt-stripe {
+  width: 5px;
+  background: linear-gradient(180deg, #4285F4, #EA4335, #FBBC05, #34A853);
+}
+
+/* --- Lower Third Style 4: AI CORE BOX --- */
+.lt-style-ai .lower-third-card {
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
+}
+.lt-style-ai .lt-stripe {
+  background: var(--accent);
+}
+
+/* --- Lower Third Style 5: CLI COMMAND LINE --- */
+.lt-style-cli .lower-third-card {
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  background: #050505;
+  border: 1px solid #33ff33;
+}
+.lt-style-cli .lt-stripe {
+  background: #33ff33;
+}
+.lt-style-cli .lt-role {
+  color: #88ff88;
+}
+
+/* --- Lower Third Style 6: SPLIT BLADE --- */
+.lt-style-split .lower-third-card {
+  border-radius: 0;
+  border: none;
+  background: linear-gradient(90deg, rgba(var(--primary-rgb), 0.9), transparent);
+}
+.lt-style-split .lt-stripe {
+  display: none;
+}
+
+/* --- Lower Third Style 7: BRUTALIST BOX --- */
+.lt-style-brutalist .lower-third-card {
+  background: var(--text-main);
+  border: 3px solid #000;
+  box-shadow: 8px 8px 0px #000;
+  border-radius: 0;
+}
+.lt-style-brutalist .lt-stripe {
+  display: none;
+}
+.lt-style-brutalist .lt-name {
+  color: #000;
+  text-shadow: none;
+}
+.lt-style-brutalist .lt-role {
+  color: var(--primary);
+}
+.lt-style-brutalist .lt-social {
+  color: #000;
+}
+
+/* --- Lower Third Style 8: FLOATING BUBBLE --- */
+.lt-style-bubble {
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  width: 420px;
+}
+.lt-style-bubble.active {
+  transform: translateX(-50%) translateY(0);
+}
+.lt-style-bubble .lower-third-card {
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-align: center;
+}
+.lt-style-bubble .lt-stripe {
+  display: none;
+}
+.lt-style-bubble .lt-meta {
+  justify-content: center;
+  gap: 15px;
+}
+
+/* ==========================================================================
+   STREAM WIDGETS ENGINE (Chat, Ticker, Topic, Code Snippets, etc.)
+   ========================================================================== */
+.widget {
+  position: absolute;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 200;
+}
+
+.widget-hidden {
+  opacity: 0 !important;
+  transform: scale(0.8) !important;
+  pointer-events: none;
+}
+
+/* Widget Header Utility */
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid var(--glass-border);
+  border-radius: 8px 8px 0 0;
+  font-family: var(--font-title);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.widget-header .widget-icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--accent);
+}
+
+.widget-header .widget-title {
+  font-size: 0.9rem;
+}
+
+/* --- WIDGET 1: CHAT FEED (Positioned right side by default) --- */
+.widget-chat-container {
+  width: 360px;
+  height: 700px;
+  right: 60px;
+  top: 140px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dynamic Positioning for Solo+Chat Layout */
+.layout-solo-chat .widget-chat-container {
+  width: 520px;
+  height: 652px;
+  right: 80px;
+  top: 170px;
+}
+
+/* Dynamic Positioning for Presentation Layout */
+.layout-presentation .widget-chat-container {
+  width: 460px;
+  height: 430px;
+  left: 1400px;
+  top: 430px;
+}
+
+/* Dynamic Positioning for Pair Programming Layout */
+.layout-pair-programming .widget-chat-container {
+  width: 380px;
+  height: 250px;
+  left: 1480px;
+  top: 635px;
+}
+
+/* Dynamic Positioning for Q&A layout */
+.layout-qa .widget-chat-container {
+  width: 680px;
+  height: 562px;
+  left: 1160px;
+  top: 200px;
+}
+
+/* Dynamic Positioning for Lobby layout */
+.layout-lobby .widget-chat-container {
+  width: 580px;
+  height: 650px;
+  left: 80px;
+  top: 200px;
+}
+
+/* Dynamic Positioning for Podcast layout */
+.layout-podcast .widget-chat-container {
+  width: 640px;
+  height: 310px;
+  left: 640px;
+  top: 595px;
+}
+
+/* Dynamic Positioning for Split layout */
+.layout-split .widget-chat-container {
+  width: 580px;
+  height: 200px;
+  left: 670px;
+  top: 770px;
+}
+
+.chat-feed {
+  flex-grow: 1;
+  overflow: hidden;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.chat-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 10px;
+  animation: chat-fade-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chat-user-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.chat-badge-svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--accent);
+}
+
+.chat-username {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.chat-message {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.35;
+  word-wrap: break-word;
+}
+
+@keyframes chat-fade-in {
+  0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- WIDGET 2: BOTTOM NEWS TICKER --- */
+.widget-ticker-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1920px;
+  height: 50px;
+  background: var(--ticker-bg, rgba(5,5,15,0.95));
+  border-top: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  z-index: 500;
+  overflow: hidden;
+}
+
+.ticker-prefix {
+  height: 100%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  font-family: var(--font-title);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  font-size: 0.9rem;
+  z-index: 10;
+  box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+  text-transform: uppercase;
+}
+
+.ticker-track {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  position: absolute;
+  padding-left: 100%;
+  animation: ticker-scroll 35s linear infinite;
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  color: var(--ticker-color, var(--accent));
+  letter-spacing: 1px;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* --- WIDGET 3: ACTIVE TOPIC CARD (Left top default) --- */
+.widget-topic-container {
+  left: 60px;
+  top: 40px;
+  width: 440px;
+  padding: 12px 20px;
+  background: var(--glass-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.topic-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 2px;
+}
+
+.topic-text {
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--text-main);
+}
+
+/* Adjustments for layouts that occupy top-left space */
+.layout-lobby .widget-topic-container {
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: none;
+  border-bottom: 4px solid var(--accent);
+  border-radius: 0 0 8px 8px;
+  text-align: center;
+  width: 600px;
+}
+
+/* --- WIDGET 4: COUNTDOWN CLOCK --- */
+.widget-countdown {
+  left: 760px;
+  top: 300px;
+  width: 400px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--border-glow), 0 10px 30px rgba(0,0,0,0.4);
+  border-radius: 12px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.countdown-body {
+  padding: 25px;
+}
+
+.countdown-time {
+  font-family: var(--font-mono);
+  font-size: 4.8rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-shadow: 0 0 20px var(--primary);
+  line-height: 1;
+  margin-bottom: 15px;
+}
+
+.countdown-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.countdown-progress-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 1s linear;
+}
+
+/* Shift when in Lobby Layout */
+.layout-lobby .widget-countdown {
+  display: block !important;
+  left: 760px;
+  top: 320px;
+  width: 400px;
+  transform: scale(1.3);
+}
+
+/* --- WIDGET 5: LIVE POLL CARD --- */
+.widget-poll-container {
+  left: 60px;
+  top: 680px;
+  width: 360px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.poll-options-list {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.poll-option-row {
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 6px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  overflow: hidden;
+}
+
+.poll-option-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: rgba(var(--accent-rgb), 0.15);
+  border-right: 2px solid var(--accent);
+  transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+}
+
+.poll-option-text, 
+.poll-option-pct {
+  z-index: 5;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.poll-option-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 75%;
+}
+
+/* --- WIDGET 6: CODE SNIPPET PANEL --- */
+.widget-code-container {
+  left: 60px;
+  top: 170px;
+  width: 440px;
+  background: #0a0b10;
+  border: 1px solid #1f2230;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  font-family: var(--font-mono);
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 15px;
+  background: #141620;
+  border-bottom: 1px solid #1f2230;
+  border-radius: 10px 10px 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.code-lang {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.code-pre {
+  padding: 15px;
+  margin: 0;
+  overflow: auto;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+  max-height: 380px;
+}
+
+/* Adjustments for layouts with wide sharing */
+.layout-presentation .widget-code-container,
+.layout-pair-programming .widget-code-container {
+  display: none !important; /* Code is shown in screen capture instead */
+}
+
+/* --- WIDGET 7: SOCIAL ROTATOR --- */
+.widget-socials-container {
+  position: absolute;
+  right: 60px;
+  top: 40px;
+  height: 48px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  border-radius: 24px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.widget-socials-container .socials-icon {
+  width: 18px;
+  height: 18px;
+  fill: var(--accent);
+  display: flex;
+  align-items: center;
+}
+
+.widget-socials-container .socials-text {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--text-main);
+  letter-spacing: 0.5px;
+}
+
+/* Reposition in layouts where chat occupies top right */
+.layout-solo-chat .widget-socials-container {
+  right: auto;
+  left: 60px;
+  top: 865px;
+}
+
+/* --- WIDGET 8: SUBSCRIBER GOAL BAR --- */
+.widget-goal-container {
+  position: absolute;
+  left: 540px;
+  top: 40px;
+  width: 400px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 10px 15px;
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  font-family: var(--font-title);
+  text-transform: uppercase;
+}
+
+.goal-title {
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.goal-numbers {
+  color: var(--accent);
+}
+
+.goal-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.goal-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  box-shadow: 0 0 8px var(--accent);
+  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Position Shift in Lobby Layout */
+.layout-lobby .widget-goal-container {
+  left: 760px;
+  top: 720px;
+  width: 400px;
+}
+
+/* --- WIDGET 9: Q&A OVERLAY QUESTION CARD --- */
+.widget-qa-container {
+  left: 1140px;
+  top: 250px;
+  width: 700px;
+  background: var(--glass-bg);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  box-shadow: var(--border-glow), 0 15px 35px rgba(0,0,0,0.5);
+  padding: 30px;
+  text-align: center;
+}
+
+/* Dynamic Positioning for QA Layout */
+.layout-qa .widget-qa-container {
+  display: block !important;
+  left: 80px;
+  top: 790px;
+  width: 1000px;
+  padding: 20px 30px;
+}
+
+.qa-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #000;
+  font-family: var(--font-title);
+  font-weight: 800;
+  padding: 4px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 18px;
+}
+
+.layout-qa .qa-badge {
+  margin-bottom: 8px;
+}
+
+.qa-text {
+  font-size: 1.6rem;
+  line-height: 1.4;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.layout-qa .qa-text {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+}
+
+.qa-author {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   Utility Helpers & Transitions
+   ========================================================================== */
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Webcam Tryout Video Layer */
+.slot-webcam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* behind decorations, in front of canvas background */
+  display: none;
+  background: #0d0c15;
+  transform: scaleX(-1); /* Mirror camera for more intuitive preview */
+}

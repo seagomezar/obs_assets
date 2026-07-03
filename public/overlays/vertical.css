@@ -1,0 +1,367 @@
+/* ==========================================================================
+   OBS Vertical Overlay (9:16 aspect ratio - Reels / TikTok / Shorts)
+   Imports unified styles and overrides layouts and widget coordinates.
+   ========================================================================== */
+
+@import "unified.css";
+
+/* Lock dimensions for vertical 1080x1920 mobile viewport */
+body {
+  width: 1080px;
+  height: 1920px;
+}
+
+#bg-canvas {
+  width: 1080px;
+  height: 1920px;
+}
+
+#overlay-root {
+  width: 1080px;
+  height: 1920px;
+}
+
+/* ==========================================================================
+   ALERTS OVERRIDE (Fits 1080px width)
+   ========================================================================== */
+#alert-container {
+  width: 900px;
+  top: 40px;
+}
+#alert-container.alert-hidden {
+  top: -140px;
+}
+
+/* ==========================================================================
+   WIDGETS LAYOUT OVERRIDES (Stacking vertically for mobile)
+   ========================================================================== */
+
+/* News ticker fits 1080px width */
+.widget-ticker-container {
+  width: 1080px;
+  height: 60px;
+}
+.ticker-content {
+  font-size: 1.25rem;
+}
+
+/* Active Topic Card (Centered at top) */
+.widget-topic-container {
+  left: 40px;
+  top: 40px;
+  width: 1000px;
+  height: 100px;
+  border-left: none;
+  border-bottom: 5px solid var(--accent);
+  border-radius: 0 0 12px 12px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.topic-label {
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+}
+.topic-text {
+  font-size: 1.5rem;
+}
+
+/* Goal indicator (Middle overlay bar) */
+.widget-goal-container {
+  left: 40px;
+  top: 160px;
+  width: 1000px;
+  padding: 12px 20px;
+}
+.goal-bar {
+  height: 10px;
+}
+
+/* Social handles (Centered below goal indicator) */
+.widget-socials-container {
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+  top: 1750px;
+  height: 54px;
+  border-radius: 27px;
+  padding: 0 25px;
+}
+
+/* Q&A card (Centered middle/bottom) */
+.widget-qa-container {
+  width: 1000px;
+  left: 40px;
+  top: 1220px;
+}
+.qa-text {
+  font-size: 1.6rem;
+}
+
+/* Poll widget (Bottom area) */
+.widget-poll-container {
+  width: 1000px;
+  left: 40px;
+  top: 1220px;
+}
+
+/* Code sharing widget */
+.widget-code-container {
+  width: 1000px;
+  left: 40px;
+  top: 1220px;
+}
+.code-pre {
+  max-height: 480px;
+}
+
+/* Chat container widget */
+.widget-chat-container {
+  width: 1000px;
+  height: 420px;
+  left: 40px;
+  top: 1300px;
+}
+
+/* Countdown Clock */
+.widget-countdown {
+  left: 340px;
+  top: 750px;
+  width: 400px;
+}
+.layout-lobby .widget-countdown {
+  transform: scale(1.4);
+  left: 340px;
+  top: 600px;
+  display: block !important;
+}
+
+/* ==========================================================================
+   VERTICAL PORTRAIT LAYOUT COORDINATES
+   ========================================================================== */
+
+/* --- LAYOUT 1: SOLO SPEAKER (Square webcam) --- */
+.layout-solo #slot-0 {
+  width: 1000px;
+  height: 1000px;
+  left: 40px;
+  top: 260px;
+  display: block;
+}
+.layout-solo #slot-1, 
+.layout-solo #slot-presentation {
+  display: none !important;
+}
+/* Chat widget sits at bottom in Solo layout */
+.layout-solo .widget-chat-container {
+  display: block;
+  top: 1300px;
+  height: 420px;
+}
+
+/* --- LAYOUT 2: SOLO SPEAKER + CHAT --- */
+.layout-solo-chat #slot-0 {
+  width: 1000px;
+  height: 800px;
+  left: 40px;
+  top: 260px;
+  display: block;
+}
+.layout-solo-chat #slot-1, 
+.layout-solo-chat #slot-presentation {
+  display: none !important;
+}
+.layout-solo-chat .widget-chat-container {
+  display: block;
+  top: 1100px;
+  height: 620px;
+}
+
+/* --- LAYOUT 3: GUEST SPLIT SCREEN (Vertical Stack) --- */
+.layout-split #slot-0 {
+  width: 1000px;
+  height: 600px;
+  left: 40px;
+  top: 260px;
+  display: block;
+}
+.layout-split #slot-1 {
+  width: 1000px;
+  height: 600px;
+  left: 40px;
+  top: 900px;
+  display: block;
+}
+.layout-split #slot-presentation {
+  display: none !important;
+}
+.layout-split .widget-chat-container {
+  display: block;
+  top: 1530px;
+  height: 200px;
+}
+
+/* --- LAYOUT 4: PODCAST PANEL (Stacked grid) --- */
+.layout-podcast #slot-0 {
+  width: 1000px;
+  height: 520px;
+  left: 40px;
+  top: 260px;
+  display: block;
+}
+.layout-podcast #slot-1 {
+  width: 1000px;
+  height: 520px;
+  left: 40px;
+  top: 820px;
+  display: block;
+}
+.layout-podcast #slot-presentation {
+  display: none !important;
+}
+.layout-podcast .widget-chat-container {
+  display: block;
+  top: 1370px;
+  height: 360px;
+}
+
+/* --- LAYOUT 5: SPEAKER + PRESENTATION (Slides focus top) --- */
+.layout-presentation #slot-presentation {
+  display: block;
+  width: 1000px;
+  height: 1000px;
+  left: 40px;
+  top: 260px;
+}
+.layout-presentation #slot-0 {
+  display: block;
+  width: 320px;
+  height: 320px;
+  left: 40px;
+  top: 1300px;
+}
+.layout-presentation #slot-1 {
+  display: none !important;
+}
+.layout-presentation .widget-chat-container {
+  display: block;
+  width: 650px;
+  height: 320px;
+  left: 390px;
+  top: 1300px;
+}
+
+/* --- LAYOUT 6: PAIR PROGRAMMING / CODE REVIEW --- */
+.layout-pair-programming #slot-presentation {
+  display: block;
+  width: 1000px;
+  height: 800px;
+  left: 40px;
+  top: 260px;
+}
+.layout-pair-programming #slot-0 {
+  display: block;
+  width: 480px;
+  height: 320px;
+  left: 40px;
+  top: 1100px;
+}
+.layout-pair-programming #slot-1 {
+  display: block;
+  width: 480px;
+  height: 320px;
+  left: 560px;
+  top: 1100px;
+}
+.layout-pair-programming .widget-chat-container {
+  display: block;
+  top: 1450px;
+  height: 280px;
+}
+
+/* --- LAYOUT 7: FIRESIDE CHAT (Stacked bubble views) --- */
+.layout-fireside #slot-0 {
+  display: block;
+  width: 480px;
+  height: 480px;
+  left: 40px;
+  top: 380px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.4);
+}
+.layout-fireside #slot-1 {
+  display: block;
+  width: 480px;
+  height: 480px;
+  left: 560px;
+  top: 380px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.4);
+}
+.layout-fireside #slot-presentation {
+  display: none !important;
+}
+.layout-fireside .widget-chat-container {
+  display: block;
+  top: 900px;
+  height: 800px;
+}
+
+/* --- LAYOUT 8: VS MODE / DEBATE --- */
+.layout-vs-debate #slot-0 {
+  display: block;
+  width: 1000px;
+  height: 600px;
+  left: 40px;
+  top: 260px;
+  border-left: 6px solid #ff3b30;
+}
+.layout-vs-debate #slot-1 {
+  display: block;
+  width: 1000px;
+  height: 600px;
+  left: 40px;
+  top: 910px;
+  border-right: 6px solid #007aff;
+}
+.layout-vs-debate #slot-presentation {
+  display: none !important;
+}
+.layout-vs-debate .widget-chat-container {
+  display: block;
+  top: 1540px;
+  height: 190px;
+}
+
+/* --- LAYOUT 9: Q&A INTERACTION --- */
+.layout-qa #slot-0 {
+  display: block;
+  width: 1000px;
+  height: 800px;
+  left: 40px;
+  top: 260px;
+}
+.layout-qa #slot-1,
+.layout-qa #slot-presentation {
+  display: none !important;
+}
+.layout-qa .widget-qa-container {
+  display: block !important;
+  left: 40px;
+  top: 1100px;
+  width: 1000px;
+  height: 600px;
+}
+
+/* --- LAYOUT 10: STARTING / LOBBY (Countdown & Goal Focus) --- */
+.layout-lobby #slot-0,
+.layout-lobby #slot-1,
+.layout-lobby #slot-presentation {
+  display: none !important;
+}
+.layout-lobby .widget-chat-container {
+  display: block;
+  top: 1050px;
+  height: 660px;
+}
