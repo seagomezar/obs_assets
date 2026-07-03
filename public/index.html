@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OBS Tech & AI Stream Assets - Live Demo</title>
+  <meta name="description" content="Browse and control 100+ creative OBS stream overlays, themes, backgrounds, lower thirds, tech badges, widgets, and synth sounds - live in your browser, no install required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070912;
+      --panel: rgba(20, 24, 42, 0.55);
+      --border: rgba(255, 255, 255, 0.1);
+      --accent: #8b7bff;
+      --accent-2: #2cd6ad;
+      --text: #e8eaf6;
+      --muted: #8a91b4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    /* Ambient animated backdrop */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(139, 123, 255, 0.18), transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(44, 214, 173, 0.14), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 90, 180, 0.08), transparent 55%);
+      z-index: -1;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    /* Hero */
+    header.hero { text-align: center; padding: 90px 24px 50px; }
+    .badge-pill {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      border: 1px solid rgba(44, 214, 173, 0.4);
+      border-radius: 999px;
+      padding: 6px 16px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      background: linear-gradient(120deg, #fff 20%, var(--accent) 60%, var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p.sub {
+      max-width: 720px;
+      margin: 22px auto 0;
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+    .cta-row { margin-top: 36px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); text-decoration: none; }
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent), #6d5cff);
+      color: #fff;
+      border: none;
+      box-shadow: 0 8px 30px rgba(139, 123, 255, 0.4);
+    }
+    .btn-ghost { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+
+    section { padding: 40px 0; }
+    .section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+    .section-sub { color: var(--muted); margin-bottom: 26px; }
+
+    /* Live demo */
+    .demo-frame { padding: 18px; }
+    .demo-tabs { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .demo-tab {
+      font: inherit;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 18px;
+      cursor: pointer;
+    }
+    .demo-tab.active { color: #fff; border-color: var(--accent); background: rgba(139, 123, 255, 0.18); }
+    .demo-stage {
+      position: relative;
+      width: 100%;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    /* Keep 16:9 by default; iframes scale to fill */
+    .demo-stage.ratio-wide { aspect-ratio: 16 / 9; }
+    .demo-stage.ratio-tall { aspect-ratio: 9 / 16; max-width: 460px; margin: 0 auto; }
+    .demo-stage iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .demo-hint {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .demo-hint kbd {
+      font-family: 'Share Tech Mono', monospace;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 2px 8px;
+      color: var(--accent-2);
+    }
+
+    /* Catalog */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    .cat-card { padding: 24px; transition: transform 0.15s ease; }
+    .cat-card:hover { transform: translateY(-4px); }
+    .cat-card .count {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    .cat-card h3 { font-size: 1.15rem; margin: 4px 0 10px; }
+    .cat-card p { color: var(--muted); font-size: 0.92rem; }
+
+    /* Feature row */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .feat { padding: 22px; }
+    .feat h4 { font-size: 1.05rem; margin-bottom: 8px; color: #fff; }
+    .feat p { color: var(--muted); font-size: 0.92rem; }
+
+    footer {
+      text-align: center;
+      padding: 50px 24px 70px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <span class="badge-pill">100+ Creative Assets · Zero Install</span>
+    <h1>OBS Tech &amp; AI Stream Assets</h1>
+    <p class="sub">
+      A dependency-light overlay engine for streaming about the Web, Google Developer Expert
+      technologies, and AI/ML. Layouts, themes, animated canvas backgrounds, lower thirds,
+      50 tech badges, live widgets, and synthesized sound FX - controlled in real time.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#demo">▶ Try the Live Demo</a>
+      <a class="btn btn-ghost" href="https://github.com/seagomezar/obs_assets" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    <p class="demo-hint" style="margin-top:28px;">
+      This page runs the real overlays with no backend - state syncs client-side via
+      <kbd>BroadcastChannel</kbd>. Run <kbd>node server.js</kbd> locally for real OBS use.
+    </p>
+  </header>
+
+  <section id="demo" class="wrap">
+    <h2 class="section-title">Live, Interactive Demo</h2>
+    <p class="section-sub">
+      Open the <strong>Dashboard</strong> and an <strong>Overlay</strong> in separate views, then change
+      layouts, themes, backgrounds, or trigger alerts and watch them sync live.
+    </p>
+
+    <div class="glass demo-frame">
+      <div class="demo-tabs" role="tablist">
+        <button class="demo-tab active" data-view="dashboard">🎛 Dashboard Controller</button>
+        <button class="demo-tab" data-view="unified">🖥 Unified Overlay (16:9)</button>
+        <button class="demo-tab" data-view="vertical">📱 Vertical Overlay (9:16)</button>
+      </div>
+
+      <div id="stage" class="demo-stage ratio-wide">
+        <iframe id="demo-iframe" src="dashboard/index.html"
+                title="OBS assets live demo"
+                allow="camera; microphone"></iframe>
+      </div>
+
+      <p class="demo-hint">
+        Tip: open the <a href="dashboard/index.html" target="_blank">Dashboard</a> and the
+        <a href="overlays/unified.html" target="_blank">Overlay</a> in two browser tabs -
+        changes in one appear instantly in the other.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="section-title">The Asset Library</h2>
+    <p class="section-sub">Seven categories, mix-and-match, all rendered with vanilla HTML5, CSS3, Canvas, and the Web Audio API.</p>
+    <div class="cat-grid">
+      <div class="glass cat-card"><div class="count">10</div><h3>Scene Layouts</h3><p>Solo, guest split, podcast panel, pair programming, VS battle, Q&amp;A queue, BRB lobby, and more.</p></div>
+      <div class="glass cat-card"><div class="count">8</div><h3>Styling Themes</h3><p>Gemini Glow, GDE Neon, Matrix Terminal, Synthwave, Frost, Dracula, Pixel Hacker, Gold Corporate.</p></div>
+      <div class="glass cat-card"><div class="count">6</div><h3>Canvas Backgrounds</h3><p>Particle web, binary stream, perspective grid, neural nodes, fluid wave, tech bubbles - all at 60fps.</p></div>
+      <div class="glass cat-card"><div class="count">8</div><h3>Lower Thirds</h3><p>Slide slate, glass capsule, GDE ribbon, AI core box, CLI command line, split blade, brutalist, tag bubble.</p></div>
+      <div class="glass cat-card"><div class="count">50</div><h3>Tech Badges</h3><p>Scalable SVG icons across Web core, Google frameworks, AI/ML, socials, and general tech.</p></div>
+      <div class="glass cat-card"><div class="count">12</div><h3>Interactive Widgets</h3><p>Ticker, chat box, countdown, topic card, poll, code panel, social rotator, bio, goal bar, Q&amp;A, and more.</p></div>
+      <div class="glass cat-card"><div class="count">6</div><h3>Synth Sound FX</h3><p>Bloop, cyber swoosh, glitch, sub drop, chime bell, tech fanfare - generated live via Web Audio.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="section-title">Why It's Built This Way</h2>
+    <div class="feat-grid">
+      <div class="glass feat"><h4>Real-time sync</h4><p>A WebSocket hub pushes dashboard changes to every overlay in under 50ms. On this demo, a client-side shim stands in for the server.</p></div>
+      <div class="glass feat"><h4>Zero heavy deps</h4><p>No React, no Tailwind, no build step. Just Express, <code>ws</code>, and vanilla front-end code that OBS Browser Sources love.</p></div>
+      <div class="glass feat"><h4>Synthesized audio</h4><p>Alert sounds are generated on the fly with oscillators and envelopes - no bundled mp3s to load.</p></div>
+      <div class="glass feat"><h4>OBS-first sizing</h4><p>Overlays are pixel-precise for 1920×1080 (and 1080×1920 vertical), so they drop straight into a scene.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>OBS Tech &amp; AI Stream Assets · MIT License ·
+      <a href="https://github.com/seagomezar/obs_assets" target="_blank" rel="noopener">Source on GitHub</a>
+    </p>
+    <p style="margin-top:8px;">Built for Web, GDE &amp; AI creators.</p>
+  </footer>
+
+  <script>
+    // Simple tab switcher for the live-demo stage. Swapping the iframe src is
+    // enough because state is shared across frames via BroadcastChannel.
+    const stage = document.getElementById('stage');
+    const iframe = document.getElementById('demo-iframe');
+    const views = {
+      dashboard: { src: 'dashboard/index.html', ratio: 'ratio-wide' },
+      unified: { src: 'overlays/unified.html', ratio: 'ratio-wide' },
+      vertical: { src: 'overlays/vertical.html', ratio: 'ratio-tall' }
+    };
+    document.querySelectorAll('.demo-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.demo-tab').forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        const view = views[tab.dataset.view];
+        iframe.src = view.src;
+        stage.className = `demo-stage ${view.ratio}`;
+      });
+    });
+  </script>
+</body>
+</html>

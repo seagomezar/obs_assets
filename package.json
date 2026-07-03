@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "reset": "node server.js --reset"
+    "reset": "node server.js --reset",
+    "demo": "python3 -m http.server 8080 --directory public"
   },
   "dependencies": {
     "express": "^4.19.2",

@@ -35,8 +35,9 @@ class VerticalOverlayController {
   connectWS() {
     const wsUrl = `ws://${window.location.hostname || 'localhost'}:3000`;
     console.log(`Connecting to WebSocket hub for vertical overlay at: ${wsUrl}`);
-    
-    this.socket = new WebSocket(wsUrl);
+
+    // Real WebSocket locally, serverless shim on GitHub Pages (same surface).
+    this.socket = new OverlayConnection(wsUrl);
 
     this.socket.onopen = () => {
       console.log('Vertical overlay successfully connected to WebSocket hub.');
